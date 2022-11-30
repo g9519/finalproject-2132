@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!--Jospeh Tyronne Salto Student# A01060698
+			Georgina D'Souza Student# A00910581-->	
+        <title>Final Project</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="utf-8">
+
+		<link rel="apple-touch-icon" sizes="180x180" href="favicon/favicon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon.png">
+
+		<link rel="stylesheet" href="css/styles.css">
+		<script src="./script/jquery-3.6.1.min.js" defer="defer"></script>
+		<script src="./script/floor_map.js" defer="defer"></script>
+		<script src="./script/monster.js" defer="defer"></script>
+		<script src="./script/dungeon_layout.js" defer="defer"></script>
+		<script src="./script/player.js" defer="defer"></script>
+		<script src="./script/collisions.js" defer="defer"></script>
+		<script src="./script/controls.js" defer="defer"></script>
+		<script src="./script/game_generator.js" defer="defer"></script>
+		<script src="./script/project2.js" defer="defer"></script>		
+		<script src="./script/dice_game.js" defer="defer"></script>
+		<script src="./script/hang_man.js" defer="defer"></script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<header>
+				<h1>COMP 2132 - Final Project</h1>
+			</header>
+			
+			<main>
+				<div id="dungeonCrawler">
+					<canvas id="floor"></canvas>
+					<canvas id="character"></canvas>
+				</div>
+			</main>
+			<footer>
+				<p>This page was created for educational purpose.</p>
+				<p>Author: Joseph Tyronne Salto and Georgina D'souza</p>
+				<p>COMP 2032 - Web Development JavaScript - Fall 2022</p>
+			</footer>
+		</div>
+
+		<div id="gameInstruction">
+			<div id="instructContainer">			
+				<div id="instructions">
+					<h2 id="instructHeading">Game Instructions</h2>
+					<h3>Movement:</h3>
+					<ul>
+						<li>W = Move Forward</li>
+						<li>S = Move Backward</li>
+						<li>A = Move Left</li>
+						<li>D = Move Right</li>
+					</ul>
+
+					<h3>Dice Battle:</h3>
+					<p>Move Towards the monster to trigger the Dice battle.</p>
+					<h4>Mechanics:</h4>
+					<ul>
+						<li>Win  = Monster will die.</li>
+						<li>Lose = Player will respawn to starting point.</li>
+						<li>Draw = Roll Dice Again</li>
+					</ul>
+
+					<h3>Hang Man:</h3>
+					<p>Move Towards the door to trigger the Hang man game.</p>
+					<p>Before Hangman can be triggered, Monsters in the level should be defeated</p>
+					<h4>Mechanics:</h4>
+					<ul>
+						<li>You have only 6 incorrect guesses</li>
+						<li>Win  = Door will open</li>
+						<li>Lose = Player will respawn to starting point.</li>
+					</ul>
+				</div>
+
+				<div id="instBtn">
+						<button type="button" class="button" id="closeInstBtn">Exit</button>
+				</div>
+			</div>
+		</div>
+		
+		<div id="diceBattle">
+			<div id= "diceBattleContainer">
+				<div id="diceCharBattle">		
+					<h2 id="diceRound">Press Roll Dice to play!</h2>
+					<div class="diceBattling">
+						<img class="diceChar" id="diceAmogus" src="./images/knight_f_run_anim_f0.png" alt="">
+						<img id="diceMons" src="./images/sprite_monster/ogre_idle_anim_f0.png" alt="">
+					</div>
+				</div>
+
+				<div id="diceYouWin">
+					<h2 class="winText">You Win</h2>
+
+					<div class="diceBattling">
+						<img class="diceChar"  id="diceCharWin" src="./images/knight_f_run_anim_f0.png" alt="">
+					</div>
+					
+				</div>
+
+				<div id="diceYouLost">
+					<h2 class="lostText">TOO BAD, You Lost!</h2>
+
+					<div class="diceBattling">
+						<img  class="diceChar" id="diceCharLost" src="./images/knight_f_run_anim_f0.png" alt="">
+					</div>
+				</div>
+				
+				<!--Dice Battle stats-->
+				<div id="diceStats">
+					<div id="playerStats">
+						<h3 id="playerMsg">YOU</h3>
+						
+						<div class="diceContainer">	
+							<img src="./images/dice/d1.png" alt="p1dice1" id="p1Dice1" class="dice active" style="width: 10%; height: auto;">
+	  
+						  	<img src="./images/dice/d2.png" alt="p1die" id="p1Dice2" class="dice active" style="width: 10%; height: auto;">
+			  			</div>
+						
+						<h4>
+							P1 Score: <span id="p1Score">0</span>
+						</h4>
+						<h3>
+							P1 Total: <span id="p1Total">0</span>
+						</h3>
+					</div>
+
+					<div id="monsStats">
+						<h3 id="opponentMsg">Opponent</h3>
+						
+						<div class="diceContainer">
+							<img src="./images/dice/d1.png" alt="p2dice1" id="p2Dice1" class="dice active" style="width: 10%; height: auto;">
+	  
+						  	<img src="./images/dice/d2.png" alt="p2die" id="p2Dice2" class="dice active" style="width: 10%; height: auto;">
+			  			</div>
+						
+						<h4>
+							P2 Score: <span id="p2Score">0</span>
+						</h4>
+						<h3>
+							P2 Total: <span id="p2Total">0</span>
+						</h3>
+					</div>
+				</div>
+
+				<!--Dice buttons-->
+				<div id="diceBtnContainer">
+					<button type="button" class="button" id="rollbtn">Roll Dice</button>
+        			<div>
+						<button type="button" class="button" id="exitGamebtn">Return</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="hangMan">
+			<div id="hangManContainer">
+				<div id="hangManUnlocking">
+					<h2>Find the word to Unlock!</h2>
+					
+					<div id="hangManAnime"></div>
+					<img src="./images/sprite_monster/lizard_f_idle_anim_f0.png" alt="" style=" width: 5%; height: auto; position: relative;left: 10%;" id = "hangManMons">
+					<img src="./images/knight_f_run_anim_f0.png" alt="" style=" width: 5%; height: auto; position: relative;right: -70%;" id = "hangManPlayer">
+					<img src="./images/doors_leaf_closed.png" alt="" style=" width: 10%; height: auto; position: relative; right: -70%;" id = "hangManDoor">
+					<div id="HangManWordGuess">
+						<div id="word-container"></div>
+						<p id="hint-container">Hint: </p>
+					</div>
+				</div>	
+
+				<div id="hangManUnlock">
+					<h2>Door Unlock!</h2>
+					<div id="guessedWord"></div>
+					<div class="diceBattling">
+						<img src="./images/doors_leaf_open.png" alt="" class="diceChar" >
+					</div>
+				</div>
+	
+				<div id="hangManDead">
+					<h2>Monster Caught you! Too Slow!</h2>
+					<div class="diceBattling">
+						<img  class="diceChar" id="hangManLost" src="./images/sprite_monster/lizard_m_run_anim_f0.png" alt="">
+					</div>
+				</div>
+
+				<div id="keyBoard"></div>
+
+				<div id="hangManBtnContainer">
+					<button type="button" class="button" id="returnGamebtn" disabled>Return</button>
+				</div>
+			</div>
+		</div>
+
+		<div id="gameEndCredits">
+			<div id="endCreditsContainer">			
+				<div id="endCredits">
+					<h2 id="CreditHeading">YOU COMPLETED THE GAME!!!!</h2>
+					<div id="price">
+						<img src="./images/coin_anim_f0.png" alt="" style="width: 7%; height: auto;">
+						<img src="./images/chest_full_open_anim_f2.png" alt="" style="width: 30%; height: auto;">
+						<img src="./images/coin_anim_f0.png" alt="" style="width: 7%; height: auto;">
+					</div>
+					<h4>Game has been made by:</h4>
+					<p>Joseph Tyronne Salto</p>						<p>Georgina D'Souza</p>
+					</ul>
+
+					<h4>Special Thanks to:</h4>
+					<p>Jeff Parker</p>
+
+					<h4>Image credits to:</h4>
+					<p>user: 0x72</p>
+					<p><a href="https://0x72.itch.io/">https://0x72.itch.io/</a></p>
+				</div>
+			
+				<div id="endCreditBtn" >
+					<button type="button" class="button" id="playAgain">Play Again!</button>
+				</div>
+			</div>	
+		</div>
+	</body>
+
+</html>
